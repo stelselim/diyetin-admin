@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import Container from 'react-bootstrap/Container';
 
 export class HomePage extends Component {
     render() {
-        return <div></div>;
+        return <Container>HomePage</Container>;
     }
 }
 
