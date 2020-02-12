@@ -2,10 +2,10 @@ import firebase from 'firebase';
 import { async } from 'q';
 
 /**
- *  @param {number} ali selim
+ *  All Operations for Authentication: Login, SignUp, Reset Password
  */
 
-class FirebaseLogin {
+class FirebaseAuth{
     authFirebase: firebase.auth.Auth;
     firestoreFirebase: firebase.firestore.Firestore;
 
@@ -61,7 +61,7 @@ class FirebaseLogin {
             registerDate: new Date(),
         }
         );
-
+        
         return answer;
     }
 
@@ -75,4 +75,3 @@ class FirebaseLogin {
     }
 
 }
-
