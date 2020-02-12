@@ -29,7 +29,7 @@ npm start
 
 👤 **Selim Üstel**
 
-* Github: [@kaplanyb](https://github.com/stelselim)
+* Github: [@stelselim](https://github.com/stelselim)
 * LinkedIn: [@linkedin.com/in/selimustel](https://www.linkedin.com/in/selimustel/)
 
 
