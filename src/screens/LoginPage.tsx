@@ -1,36 +1,27 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import {withRouter, RouteComponentProps} from 'react-router-dom';
-import {
-    Formik,
-    Field,
-    Form
-} from 'formik';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Formik, Field, Form } from 'formik';
 
-interface Props extends RouteComponentProps {
-
-}
+interface Props extends RouteComponentProps {}
 
 interface State {
     user: {
-        username: string,
-        password: string
+        username: string;
+        password: string;
     };
 }
 
-
-
-export class LoginPage extends Component<Props, State>{
-
+export class LoginPage extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
             user: {
                 username: '',
-                password: ''
-            }
-        }
+                password: '',
+            },
+        };
     }
 
     render() {
@@ -40,19 +31,30 @@ export class LoginPage extends Component<Props, State>{
                     initialValues={this.state.user}
                     onSubmit={(values, actions) => {
                         actions.setSubmitting(false);
-                        this.setState({user: {username: values.username, password: values.password}});
+                        this.setState({
+                            user: {
+                                username: values.username,
+                                password: values.password,
+                            },
+                        });
                         alert(JSON.stringify(values, null, 2));
-                        this.props.history.push('/homepage')
+                        this.props.history.push('/homepage');
                     }}
-                    render={formikBag => (
+                    render={(formikBag) => (
                         <Form>
                             <Field
                                 name="username"
                                 //@ts-ignore
                                 render={({ field, form, meta }) => (
                                     <div>
-                                        <input type="text" {...field} placeholder="username" />
-                                        {meta.touched && meta.error && meta.error}
+                                        <input
+                                            type="text"
+                                            {...field}
+                                            placeholder="username"
+                                        />
+                                        {meta.touched &&
+                                            meta.error &&
+                                            meta.error}
                                     </div>
                                 )}
                             />
@@ -61,14 +63,18 @@ export class LoginPage extends Component<Props, State>{
                                 //@ts-ignore
                                 render={({ field, form, meta }) => (
                                     <div>
-                                        <input type="password" {...field} placeholder="password" />
-                                        {meta.touched && meta.error && meta.error}
+                                        <input
+                                            type="password"
+                                            {...field}
+                                            placeholder="password"
+                                        />
+                                        {meta.touched &&
+                                            meta.error &&
+                                            meta.error}
                                     </div>
                                 )}
                             />
-                            <Button type="submit">
-                                Gönder
-                            </Button>
+                            <Button type="submit">Gönder</Button>
                         </Form>
                     )}
                 />
