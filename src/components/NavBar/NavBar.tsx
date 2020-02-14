@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import { User, setUser } from '../../reducer/Actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export class NavBar extends Component {
+interface Props {
+    user: User,
+    setUser: typeof setUser
+}
+
+export class NavBar extends Component<Props>{
     render() {
         return (
             <Navbar bg="light" expand="lg">
@@ -12,6 +20,9 @@ export class NavBar extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/">Link</Nav.Link>
+                        <Nav.Link href="/login" onClick={() => {
+                            this.props.setUser({username: ''})
+                        }}>Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -19,4 +30,21 @@ export class NavBar extends Component {
     }
 }
 
-export default NavBar;
+
+interface StateRedux {
+    user: User
+}
+
+
+const mapStateToProps = (state: StateRedux) => {
+    const { user } = state;
+    return { user };
+};
+
+const mapDispatchToProps = (dispatch: any) => (
+    bindActionCreators({
+        setUser
+    }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

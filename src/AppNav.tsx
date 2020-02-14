@@ -11,8 +11,8 @@ export class AppNav extends Component {
                 <div>
                     <NavBar />
                     <Switch>
-                        <Route path="/" exact component={LoginPage} />
-                        <Route path="/homepage" exact component={HomePage} />
+                        <Route path="/login" exact component={LoginPage} />
+                        <Route path="/" exact component={HomePage} />
                     </Switch>
                 </div>
             </Router>
