@@ -1,33 +1,17 @@
 import firebase from 'firebase';
 
-
-class FirebaseFAQ{
-    
-
+class FirebaseFAQ {
     /**
      * Doğru Bilinen Yanlışlar
-     * @param 
+     * @param
      */
-    falseKnownTrue = () =>{
+    falseKnownTrue = () => {};
 
-    }
+    gainWeight = () => {};
 
+    looseWeight = () => {};
 
-    gainWeight = () =>{
+    healthLife = () => {};
 
-    }
-
-    looseWeight = () =>{
-
-    }
-
-    healthLife = () =>{
-
-    }
-
-    interestingFacts =  () =>{
-
-    }
-
+    interestingFacts = () => {};
 }
-
