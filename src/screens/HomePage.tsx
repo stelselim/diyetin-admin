@@ -1,10 +1,39 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { User } from '../reducer/Actions';
 
-export class HomePage extends Component {
+interface Props extends RouteComponentProps {
+    user: User
+}
+
+export class HomePage extends Component<Props>{
+
+    constructor(props: Props){
+        super(props);
+        if(this.props.user.username === '')
+            this.props.history.replace('/login')
+    }
+
     render() {
         return <Container>HomePage</Container>;
     }
 }
 
-export default HomePage;
+interface StateRedux {
+    user: User
+}
+
+const mapStateToProps = (state: StateRedux) => {
+    const { user } = state;
+    return { user };
+};
+
+const mapDispatchToProps = (dispatch: any) => (
+    bindActionCreators({
+    }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HomePage));

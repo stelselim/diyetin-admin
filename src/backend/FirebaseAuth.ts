@@ -1,11 +1,10 @@
 import firebase from 'firebase';
-import { async } from 'q';
 
 /**
  *  All Operations for Authentication: Login, SignUp, Reset Password
  */
 
-class FirebaseAuth{
+export class FirebaseAuth{
     authFirebase: firebase.auth.Auth;
     firestoreFirebase: firebase.firestore.Firestore;
 
@@ -14,7 +13,6 @@ class FirebaseAuth{
     constructor() {
         this.authFirebase = firebase.auth();
         this.firestoreFirebase = firebase.firestore();
-
 
     }
     /**

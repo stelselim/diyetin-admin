@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import BForm from 'react-bootstrap/Form';
+import BFormGroup from 'react-bootstrap/FormGroup';
+import { User, setUser } from '../reducer/Actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Yup from 'yup';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import Row from 'react-bootstrap/Row'
 import { Formik, Field, Form } from 'formik';
+import { FirebaseAuth } from '../backend/FirebaseAuth';
 
-interface Props extends RouteComponentProps {}
+const valSchema = Yup.object().shape({
+    username: Yup.string().min(2).max(100).required('required'),
+    password: Yup.string().min(2).max(100).required('required')
+})
+
+interface Props extends RouteComponentProps {
+    setUser: typeof setUser
+}
 
 interface State {
     user: {
@@ -13,7 +28,7 @@ interface State {
     };
 }
 
-export class LoginPage extends Component<Props, State> {
+class LoginPage extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -29,7 +44,7 @@ export class LoginPage extends Component<Props, State> {
             <Container>
                 <Formik
                     initialValues={this.state.user}
-                    onSubmit={(values, actions) => {
+                    onSubmit={async (values, actions) => {
                         actions.setSubmitting(false);
                         this.setState({
                             user: {
@@ -37,44 +52,59 @@ export class LoginPage extends Component<Props, State> {
                                 password: values.password,
                             },
                         });
-                        alert(JSON.stringify(values, null, 2));
-                        this.props.history.push('/homepage');
+                        let auth = new FirebaseAuth();
+                        try {
+                            const res = await auth.loginWithEmailAndPassword(values.username, values.password);
+                            localStorage.setItem('username', values.username);
+                            this.props.setUser({ username: values.username });
+                            this.props.history.push('/');
+                        } catch (e) {
+                            console.log(e);
+                        }
                     }}
+                    validationSchema={valSchema}
                     render={(formikBag) => (
                         <Form>
                             <Field
                                 name="username"
                                 //@ts-ignore
-                                render={({ field, form, meta }) => (
-                                    <div>
-                                        <input
-                                            type="text"
-                                            {...field}
-                                            placeholder="username"
-                                        />
-                                        {meta.touched &&
-                                            meta.error &&
-                                            meta.error}
-                                    </div>
-                                )}
+                                render={({ field, form, meta }) => {
+                                    return (
+                                        <BFormGroup>
+                                            <BForm.Control
+                                                type="text"
+                                                {...field}
+                                                placeholder="Username"
+                                            />
+                                            {meta.touched &&
+                                                meta.error &&
+                                                <div className="text-danger">{meta.error}</div>
+                                            }
+
+
+                                        </BFormGroup>
+                                    );
+                                }}
                             />
                             <Field
                                 name="password"
                                 //@ts-ignore
                                 render={({ field, form, meta }) => (
-                                    <div>
-                                        <input
+                                    <BFormGroup>
+                                        <BForm.Control
                                             type="password"
                                             {...field}
-                                            placeholder="password"
+                                            placeholder="Password"
                                         />
                                         {meta.touched &&
                                             meta.error &&
-                                            meta.error}
-                                    </div>
+                                            <div className="text-danger">{meta.error}</div>}
+                                    </BFormGroup>
                                 )}
                             />
-                            <Button type="submit">Gönder</Button>
+                            <Row style={{ justifyContent: 'center' }}>
+                                <Button type="submit">Login</Button>
+                            </Row>
                         </Form>
                     )}
                 />
@@ -83,4 +113,19 @@ export class LoginPage extends Component<Props, State> {
     }
 }
 
-export default withRouter(LoginPage);
+interface StateRedux {
+    user: User
+}
+
+const mapStateToProps = (state: StateRedux) => {
+    const { user } = state;
+    return { user };
+};
+
+const mapDispatchToProps = (dispatch: any) => (
+    bindActionCreators({
+        setUser
+    }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginPage));
