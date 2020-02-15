@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import { Link } from 'react-router-dom';
 import { User, setUser } from '../../reducer/Actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,16 +19,20 @@ export class NavBar extends Component<Props> {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/addblog">Blog</Nav.Link>
-                        <Nav.Link href="/addrecipe">Tarif</Nav.Link>
-                        <Nav.Link
-                            href="/login"
-                            onClick={() => {
-                                this.props.setUser({ username: '' });
-                            }}
-                        >
-                            Logout
+                        <Nav.Link><Link style={{color: '#888'}} to="/">Home</Link></Nav.Link>
+                        <Nav.Link><Link style={{color: '#888'}} to="/addblog">Blog</Link></Nav.Link>
+                        <Nav.Link><Link style={{color: '#888'}} to="/addrecipe">Tarif</Link></Nav.Link>
+                        <Nav.Link>
+                            <Link
+                                style={{color: '#888'}}
+                                to="/login"
+                                onClick={() => {
+                                    this.props.setUser({ username: '' });
+                                    localStorage.setItem('username', '')
+                                }}
+                            >
+                                Logout
+                        </Link>
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
