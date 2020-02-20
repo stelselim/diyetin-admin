@@ -2,6 +2,7 @@ import firebase from 'firebase';
 
 export interface User {
     username: string;
+    firebaseuser: firebase.User | string;
 }
 
 /**

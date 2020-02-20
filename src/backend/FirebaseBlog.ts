@@ -32,18 +32,22 @@ export class FirebaseBlogOperations {
         if (header.length > 100) {
             throw 'Header should be less than 100 Characters';
         }
-
-        await this.firestoreFirebase
-            .collection('/BeslenmeApp/AllDatas/Blog')
-            .add({
-                EklenmeTarihi: new Date(),
-                BlogYazısı: blogText,
-                AnaDüşünce: mainIdea,
-                Başlık: header,
-                Kaynaklar: references,
-                Resim: imageUrl,
-                Yazar: author,
-            });
+        try {
+            let ans = await this.firestoreFirebase
+                .collection('/BeslenmeApp/AllDatas/Blog')
+                .add({
+                    EklenmeTarihi: new Date(),
+                    BlogYazısı: blogText,
+                    AnaDüşünce: mainIdea,
+                    Başlık: header,
+                    Kaynaklar: references,
+                    Resim: imageUrl,
+                    Yazar: author,
+                });
+            return ans;
+        }catch(e){
+            throw(e);
+        }
     };
 
     /**
