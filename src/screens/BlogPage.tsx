@@ -12,6 +12,7 @@ import Row from 'react-bootstrap/Row';
 import { Formik, Field, Form } from 'formik';
 import { FirebaseAuth } from '../backend/FirebaseAuth';
 import { FirebaseBlogOperations } from '../backend/FirebaseBlog';
+const toArrayBuffer = require('to-array-buffer');
 
 const valSchema = Yup.object().shape({
     title: Yup.string()
@@ -69,21 +70,13 @@ class AddBlogPage extends Component<Props, State> {
             var reader = new FileReader();
             reader.onload = function () { resolve(reader.result as string); };
             reader.onerror = reject;
-            reader.readAsDataURL(file);
-        });
-    }
-
-    convertFile = (file: File): Promise<ArrayBuffer> => {
-        return new Promise(function (resolve, reject) {
-            var reader = new FileReader();
-            reader.onload = function () { resolve(reader.result as ArrayBuffer); };
-            reader.onerror = reject;
-            reader.readAsBinaryString(file);
+            reader.readAsDataURL(file as Blob);
         });
     }
 
 
     render() {
+        console.log(toArrayBuffer)
         return (
             <Container>
                 <Formik
@@ -92,8 +85,16 @@ class AddBlogPage extends Component<Props, State> {
                         actions.setSubmitting(false);
                         try {
                             let blog = new FirebaseBlogOperations();
-                            const res = await blog.addNewBlog(values.title, values.resource, "/imgs", values.topic, values.description, values.writer);
-                            console.log(res);
+                            let base64 = await this.getBase64(values.image!);
+                            console.log(base64)
+                            let convert = toArrayBuffer(base64);
+                            console.log(convert);
+                            const resimg = await blog.uploadImage(convert);
+                            console.log(resimg);
+                            if (resimg === null)
+                                throw ("Error with image upload");
+                            const resadd = await blog.addNewBlog(values.title, values.resource, resimg, values.topic, values.description, values.writer);
+                            console.log(resadd);
                             this.props.history.push('/');
                         } catch (e) {
                             console.log(e);
