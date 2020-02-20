@@ -14,7 +14,6 @@ export class FirebaseBlogOperations {
 
     /**
      *
-     * @param {firebase.auth.UserCredential} UserCredential need to take UserCredential for reaching email and uid. This UserCredential must belonged the person who adds this blog post.
      * @param {string} imageUrl this is image url which is from image in Firebase Storage.
      * @param {string} header  Max: 100 Characters - this is header of blog.
      * @param {string} mainIdea mainIdea summarize what the blog is about.
@@ -23,7 +22,6 @@ export class FirebaseBlogOperations {
      * @param {string} author  name & surname of blog writer
      */
     addNewBlog = async (
-        UserCredential: firebase.auth.UserCredential,
         header: string,
         references: string,
         imageUrl: string,
@@ -79,8 +77,20 @@ export class FirebaseBlogOperations {
     /**
      * @param {firestore.DocumentSnapshot} documentReference this is the document reference of the blog post that would like to delete.
      */
-    deleteBlogPost = async (documentReference: firestore.DocumentSnapshot) => {
+    deleteBlogPost = async (documentReference: firestore.DocumentSnapshot,) => {
         let documentPath = documentReference.ref.path;
         await this.firestoreFirebase.doc(documentPath).delete();
     };
+
+    /**
+     * @param {ArrayBuffer} image 
+     * @returns {string} download url
+     */
+    uploadImage = async(image: ArrayBuffer) =>{
+        let answer = await this.storageFirebase.ref().put(image);
+        return answer.downloadURL;
+    }
+
 }
+
+

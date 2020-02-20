@@ -15,7 +15,7 @@ export class FirebaseAuth {
     /**
      * @param {string} email Email of the user.
      * @param {string} password Password of the user.
-     * @returns {firebase.auth.UserCredential} User info and all data required.
+     * @returns {firebase.User} User info and all data required.
      */
 
     loginWithEmailAndPassword = async (email: string, password: string) => {
@@ -23,14 +23,15 @@ export class FirebaseAuth {
             email,
             password
         );
-        return answer;
+        
+        return answer.user;
     };
 
     /**
      * This function creates a new user.
      * @param {string} email Email of the user.
      * @param {string} password Password of the user.
-     * @returns {firebase.auth.UserCredential} User info and all data required.
+     * @returns {firebase.User} User info and all data required.
      */
 
     signUpWithEmailAndPasswod = async (
