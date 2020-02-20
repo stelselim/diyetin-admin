@@ -23,7 +23,7 @@ export class FirebaseAuth {
             email,
             password
         );
-        return answer;
+        return answer.user;
     };
 
     /**
@@ -65,7 +65,7 @@ export class FirebaseAuth {
                 registerDate: new Date(),
             });
 
-        return answer;
+        return answer.user;
     };
 
     /**

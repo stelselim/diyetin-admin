@@ -14,7 +14,6 @@ export class FirebaseBlogOperations {
 
     /**
      *
-     * @param {firebase.auth.UserCredential} UserCredential need to take UserCredential for reaching email and uid. This UserCredential must belonged the person who adds this blog post.
      * @param {string} imageUrl this is image url which is from image in Firebase Storage.
      * @param {string} header  Max: 100 Characters - this is header of blog.
      * @param {string} mainIdea mainIdea summarize what the blog is about.
@@ -23,7 +22,6 @@ export class FirebaseBlogOperations {
      * @param {string} author  name & surname of blog writer
      */
     addNewBlog = async (
-        UserCredential: firebase.auth.UserCredential,
         header: string,
         references: string,
         imageUrl: string,
@@ -34,18 +32,22 @@ export class FirebaseBlogOperations {
         if (header.length > 100) {
             throw 'Header should be less than 100 Characters';
         }
-
-        await this.firestoreFirebase
-            .collection('/BeslenmeApp/AllDatas/Blog')
-            .add({
-                EklenmeTarihi: new Date(),
-                BlogYazısı: blogText,
-                AnaDüşünce: mainIdea,
-                Başlık: header,
-                Kaynaklar: references,
-                Resim: imageUrl,
-                Yazar: author,
-            });
+        try {
+            let ans = await this.firestoreFirebase
+                .collection('/BeslenmeApp/AllDatas/Blog')
+                .add({
+                    EklenmeTarihi: new Date(),
+                    BlogYazısı: blogText,
+                    AnaDüşünce: mainIdea,
+                    Başlık: header,
+                    Kaynaklar: references,
+                    Resim: imageUrl,
+                    Yazar: author,
+                });
+            return ans;
+        }catch(e){
+            throw(e);
+        }
     };
 
     /**

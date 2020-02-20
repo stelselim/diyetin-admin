@@ -10,14 +10,15 @@ interface Props extends RouteComponentProps {
 }
 
 export class HomePage extends Component<Props> {
-    constructor(props: Props) {
-        super(props);
-        if (this.props.user.username === '')
-            this.props.history.replace('/login');
-    }
 
     render() {
-        return <Container>HomePage</Container>;
+        return (
+            <Container>
+                <div style={{textAlign: 'center', fontSize: '3rem'}}>
+                    Hoş geldin {this.props.user.username}
+                </div>
+            </Container>
+        );
     }
 }
 

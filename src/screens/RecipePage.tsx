@@ -15,11 +15,11 @@ const valSchema = Yup.object().shape({
     title: Yup.string()
         .min(2)
         .max(100)
-        .required('required'),
+        .required('Boş bırakılamaz'),
     description: Yup.string()
         .min(2)
         .max(100)
-        .required('required'),
+        .required('Boş bırakılamaz'),
 });
 
 interface Props extends RouteComponentProps {}
@@ -100,7 +100,7 @@ class RecipePage extends Component<Props, State> {
                                 )}
                             />
                             <Row style={{ justifyContent: 'center' }}>
-                                <Button type="submit">Gönder</Button>
+                                <Button type="submit">Yayınla</Button>
                             </Row>
                         </Form>
                     )}

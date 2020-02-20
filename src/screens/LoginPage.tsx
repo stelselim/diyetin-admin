@@ -59,13 +59,15 @@ class LoginPage extends Component<Props, State> {
                             },
                         });
                         let auth = new FirebaseAuth();
-                        try {
+                        try { 
                             const res = await auth.loginWithEmailAndPassword(
                                 values.username,
                                 values.password
-                            );
+                            ); 
+                            if(res === null)
+                                throw("Not a valid user");
                             localStorage.setItem('username', values.username);
-                            this.props.setUser({ username: values.username });
+                            this.props.setUser({ username: values.username, firebaseuser: res! });
                             this.props.history.push('/');
                         } catch (e) {
                             console.log(e);
@@ -82,6 +84,7 @@ class LoginPage extends Component<Props, State> {
                                         <BFormGroup>
                                             <BForm.Control
                                                 type="text"
+                                                autoComplete="off"
                                                 {...field}
                                                 placeholder="Username"
                                             />
@@ -101,6 +104,7 @@ class LoginPage extends Component<Props, State> {
                                     <BFormGroup>
                                         <BForm.Control
                                             type="password"
+                                            autoComplete="off"
                                             {...field}
                                             placeholder="Password"
                                         />
