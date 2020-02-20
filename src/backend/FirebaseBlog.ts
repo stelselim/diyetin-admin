@@ -1,6 +1,7 @@
 import firebase, { firestore } from 'firebase';
 
-class FirebaseBlogOperations {
+
+export class FirebaseBlogOperations {
     authFirebase: firebase.auth.Auth;
     firestoreFirebase: firebase.firestore.Firestore;
     storageFirebase: firebase.storage.Storage;

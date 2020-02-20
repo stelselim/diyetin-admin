@@ -16,6 +16,7 @@
     "bootstrap": "^4.4.1",
     "firebase": "^7.8.1",
     "formik": "^2.1.4",
+    "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
@@ -31,11 +32,14 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pretty": "prettier --write \"src/**/*.{tsx,ts}\""
+    "pretty": "prettier --write \"src/**/*.{tsx,ts}\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
+  "homepage": ".",
   "browserslist": {
     "production": [
       ">0.2%",
