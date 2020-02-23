@@ -4,13 +4,10 @@ import Container from 'react-bootstrap/Container';
 import BForm from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import BFormGroup from 'react-bootstrap/FormGroup';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import * as Yup from 'yup';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import { Formik, Field, Form } from 'formik';
-import { FirebaseAuth } from '../backend/FirebaseAuth';
 import { FirebaseBlogOperations } from '../backend/FirebaseBlog';
 const toArrayBuffer = require('to-array-buffer');
 
@@ -91,7 +88,7 @@ class AddBlogPage extends Component<Props, State> {
                             console.log(convert);
                             const resimg = await blog.uploadImage(convert);
                             console.log(resimg);
-                            if (resimg === null) throw 'Error with image upload';
+                            if (resimg === null) throw new Error('Error with image upload');
                             const resadd = await blog.addNewBlog(
                                 values.title,
                                 values.resource,

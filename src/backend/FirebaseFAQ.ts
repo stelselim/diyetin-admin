@@ -31,10 +31,11 @@ export class FirebaseFAQ {
 
         let snapshot: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> = await this.firestoreInstance
             .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('DoğruBilinenYanlışlar').get();
+            .doc('DoğruBilinenYanlışlar')
+            .get();
 
         if (snapshot.exists) {
-            console.log("There is the doc");
+            console.log('There is the doc');
             let allData = snapshot.data() as FAQData;
             let questionArray = allData.Soru;
             /**
@@ -49,29 +50,21 @@ export class FirebaseFAQ {
             await this.firestoreInstance
                 .collection('/BeslenmeApp/AllDatas/SSS')
                 .doc('DoğruBilinenYanlışlar')
-                .set({"Soru":questionArray});
-
-
+                .set({ Soru: questionArray });
         } else {
-
             await this.firestoreInstance
                 .collection('/BeslenmeApp/AllDatas/SSS')
-                .doc('DoğruBilinenYanlışlar').set({
-                    "Soru": [
+                .doc('DoğruBilinenYanlışlar')
+                .set({
+                    Soru: [
                         {
                             Başlık: header,
                             Cevap: answer,
                             Kaynak: references,
                         },
-                    ]
+                    ],
                 });
-
         }
-
-
-
-
-
     };
 
     /**
@@ -90,11 +83,10 @@ export class FirebaseFAQ {
 
         let snapshot: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> = await this.firestoreInstance
             .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('KiloAlma').get();
+            .doc('KiloAlma')
+            .get();
 
         if (snapshot.exists) {
-
-
             let allData = snapshot.data() as FAQData;
             let questionArray = allData.Soru;
             /**
@@ -109,26 +101,21 @@ export class FirebaseFAQ {
             await this.firestoreInstance
                 .collection('/BeslenmeApp/AllDatas/SSS')
                 .doc('KiloAlma')
-                .set({"Soru":questionArray});
-
-
+                .set({ Soru: questionArray });
         } else {
-
             await this.firestoreInstance
                 .collection('/BeslenmeApp/AllDatas/SSS')
-                .doc('KiloAlma').set({
-                    "Soru": [
+                .doc('KiloAlma')
+                .set({
+                    Soru: [
                         {
                             Başlık: header,
                             Cevap: answer,
                             Kaynak: references,
                         },
-                    ]
+                    ],
                 });
-
         }
-
-
     };
 
     /**
@@ -147,11 +134,10 @@ export class FirebaseFAQ {
 
         let snapshot: firebase.firestore.DocumentData = await this.firestoreInstance
             .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('KiloVerme').get();
+            .doc('KiloVerme')
+            .get();
 
         if (snapshot.exists) {
-
-
             let allData = snapshot.data() as FAQData;
             let questionArray = allData.Soru;
             /**
@@ -166,25 +152,21 @@ export class FirebaseFAQ {
             await this.firestoreInstance
                 .collection('/BeslenmeApp/AllDatas/SSS')
                 .doc('KiloVerme')
-                .set({"Soru":questionArray});
-
-
+                .set({ Soru: questionArray });
         } else {
-
             await this.firestoreInstance
                 .collection('/BeslenmeApp/AllDatas/SSS')
-                .doc('KiloVerme').set({
-                    "Soru": [
+                .doc('KiloVerme')
+                .set({
+                    Soru: [
                         {
                             Başlık: header,
                             Cevap: answer,
                             Kaynak: references,
                         },
-                    ]
+                    ],
                 });
-
         }
-
     };
 
     /**
@@ -203,11 +185,10 @@ export class FirebaseFAQ {
 
         let snapshot: firebase.firestore.DocumentData = await this.firestoreInstance
             .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('SağlıklıYaşam').get();
+            .doc('SağlıklıYaşam')
+            .get();
 
         if (snapshot.exists) {
-
-
             let allData = snapshot.data() as FAQData;
             let questionArray = allData.Soru;
             /**
@@ -222,23 +203,20 @@ export class FirebaseFAQ {
             await this.firestoreInstance
                 .collection('/BeslenmeApp/AllDatas/SSS')
                 .doc('SağlıklıYaşam')
-                .set({"Soru":questionArray});
-
-
+                .set({ Soru: questionArray });
         } else {
-
             await this.firestoreInstance
                 .collection('/BeslenmeApp/AllDatas/SSS')
-                .doc('SağlıklıYaşam').set({
-                    "Soru": [
+                .doc('SağlıklıYaşam')
+                .set({
+                    Soru: [
                         {
                             Başlık: header,
                             Cevap: answer,
                             Kaynak: references,
                         },
-                    ]
+                    ],
                 });
-
         }
     };
     /**
@@ -255,14 +233,12 @@ export class FirebaseFAQ {
          * Full Document is like { "Soru": [ { First Question }, { Second Question }, ]  }
          */
 
-
         let snapshot: firebase.firestore.DocumentData = await this.firestoreInstance
             .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('ŞaşırtanBilgiler').get();
+            .doc('ŞaşırtanBilgiler')
+            .get();
 
         if (snapshot.exists) {
-
-
             let allData = snapshot.data() as FAQData;
             let questionArray = allData.Soru;
             /**
@@ -277,23 +253,20 @@ export class FirebaseFAQ {
             await this.firestoreInstance
                 .collection('/BeslenmeApp/AllDatas/SSS')
                 .doc('ŞaşırtanBilgiler')
-                .set({"Soru":questionArray});
-
-
+                .set({ Soru: questionArray });
         } else {
-
             await this.firestoreInstance
                 .collection('/BeslenmeApp/AllDatas/SSS')
-                .doc('ŞaşırtanBilgiler').set({
-                    "Soru": [
+                .doc('ŞaşırtanBilgiler')
+                .set({
+                    Soru: [
                         {
                             Başlık: header,
                             Cevap: answer,
                             Kaynak: references,
                         },
-                    ]
+                    ],
                 });
-
         }
     };
 }

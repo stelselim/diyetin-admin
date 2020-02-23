@@ -40,7 +40,7 @@ export class NavBar extends Component<Props> {
                             </Link>
                         </Nav.Link>
                         <Nav.Link>
-                            <Link style={{ color: '#555' }} to="/addrecipe">
+                            <Link style={{ color: '#555' }} to="/qod">
                                 Günün Sözleri
                             </Link>
                         </Nav.Link>

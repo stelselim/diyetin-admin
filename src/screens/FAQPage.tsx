@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import BForm from 'react-bootstrap/Form';
-import Image from 'react-bootstrap/Image';
 import BFormGroup from 'react-bootstrap/FormGroup';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import * as Yup from 'yup';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import { Formik, Field, Form } from 'formik';
-import { FirebaseAuth } from '../backend/FirebaseAuth';
 import { FirebaseFAQ } from '../backend/FirebaseFAQ';
-const toArrayBuffer = require('to-array-buffer');
 
 const valSchema = Yup.object().shape({
     title: Yup.string()
@@ -27,11 +22,12 @@ const valSchema = Yup.object().shape({
         .min(2)
         .required('Boş bırakılamaz'),
     type: Yup.string()
-        .min(1).max(100)
-        .required('Boş bırakılamaz')
+        .min(1)
+        .max(100)
+        .required('Boş bırakılamaz'),
 });
 
-interface Props extends RouteComponentProps { }
+interface Props extends RouteComponentProps {}
 
 interface State {
     user: {
@@ -50,7 +46,7 @@ class FAQPage extends Component<Props, State> {
                 title: '',
                 description: '',
                 resource: '',
-                type: 'FalseKnownTrue'
+                type: 'FalseKnownTrue',
             },
         };
     }
@@ -61,32 +57,24 @@ class FAQPage extends Component<Props, State> {
                 <Formik
                     initialValues={this.state.user}
                     onSubmit={async (values, actions) => {
-                        console.log('submit')
+                        console.log('submit');
                         actions.setSubmitting(false);
-                        console.log(values)
+                        console.log(values);
                         try {
                             let FAQ = new FirebaseFAQ();
                             let res;
                             if (values.type === 'FalseKnownTrue') {
                                 res = await FAQ.AddFalseKnownTrue(values.title, values.description, values.resource);
-                            }
-                            else if (values.type === 'AddGainWeight') {
+                            } else if (values.type === 'AddGainWeight') {
                                 res = await FAQ.AddGainWeight(values.title, values.description, values.resource);
-                            }
-                            else if (values.type === 'AddHealthLife') {
+                            } else if (values.type === 'AddHealthLife') {
                                 res = await FAQ.AddHealthLife(values.title, values.description, values.resource);
-                            }
-                            else if (values.type === 'AddInterestingFacts') {
+                            } else if (values.type === 'AddInterestingFacts') {
                                 res = await FAQ.AddInterestingFacts(values.title, values.description, values.resource);
-                            }
-                            else if (values.type === 'AddLoseWeight') {
+                            } else if (values.type === 'AddLoseWeight') {
                                 res = await FAQ.AddLoseWeight(values.title, values.description, values.resource);
-                            }
-                            else
-                                throw "Wrong type";
-                            if (FAQ === null)
-                                throw 'Error with upload';
-                            console.log(res)
+                            } else throw new Error('Wrong type');
+                            console.log(res);
                             this.props.history.push('/');
                         } catch (e) {
                             console.log(e);
@@ -102,11 +90,7 @@ class FAQPage extends Component<Props, State> {
                                     return (
                                         <BFormGroup>
                                             <BForm.Label>Example select</BForm.Label>
-                                            <BForm.Control
-                                                as="select"
-                                                {...field}
-                                                placeholder="Başlık (Max 80 karakter)"
-                                            >
+                                            <BForm.Control as="select" {...field} placeholder="Başlık (Max 80 karakter)">
                                                 <option value="AddGainWeight">Kilo Alma</option>
                                                 <option value="AddLoseWeight">Kilo Verme</option>
                                                 <option value="AddHealthLife">Sağlıklı Yaşam</option>
@@ -170,9 +154,9 @@ class FAQPage extends Component<Props, State> {
                                 )}
                             />
                             <Row style={{ justifyContent: 'center' }}>
-                                <Button
-                                    onClick={() => console.log('press')}
-                                    type="submit">Gönder</Button>
+                                <Button onClick={() => console.log('press')} type="submit">
+                                    Gönder
+                                </Button>
                             </Row>
                         </Form>
                     )}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { User } from './reducer/Actions';
@@ -9,6 +9,7 @@ import NavBar from './components/NavBar/NavBar';
 import BlogPage from './screens/BlogPage';
 import RecipePage from './screens/RecipePage';
 import FAQPage from './screens/FAQPage';
+import QODPage from './screens/QuotePage';
 
 interface Props {
     user: User;
@@ -27,6 +28,14 @@ export class AppNav extends Component<Props> {
                         render={() => {
                             if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
                             return <BlogPage />;
+                        }}
+                    />
+                    <Route
+                        path="/qod"
+                        exact
+                        render={() => {
+                            if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
+                            return <QODPage />;
                         }}
                     />
                     <Route

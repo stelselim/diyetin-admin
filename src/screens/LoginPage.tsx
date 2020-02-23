@@ -61,7 +61,7 @@ class LoginPage extends Component<Props, State> {
                         let auth = new FirebaseAuth();
                         try {
                             const res = await auth.loginWithEmailAndPassword(values.username, values.password);
-                            if (res === null) throw 'Not a valid user';
+                            if (res === null) throw new Error('Not a valid user');
                             localStorage.setItem('username', values.username);
                             this.props.setUser({
                                 username: values.username,

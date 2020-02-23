@@ -36,7 +36,7 @@ export class FirebaseAuth {
          */
         let answer = await this.authFirebase.createUserWithEmailAndPassword(email, password);
         if (answer.user === null) {
-            throw 'User can not be signed up';
+            throw new Error('User can not be signed up');
         }
         /**
          * The new user when signed up, it must add users name and surname.

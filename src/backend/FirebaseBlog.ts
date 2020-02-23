@@ -22,7 +22,7 @@ export class FirebaseBlogOperations {
      */
     addNewBlog = async (header: string, references: string, imageUrl: string, mainIdea: string, blogText: string, author: string) => {
         if (header.length > 100) {
-            throw 'Header should be less than 100 Characters';
+            throw new Error('Header should be less than 100 Characters');
         }
         try {
             let ans = await this.firestoreFirebase.collection('/BeslenmeApp/AllDatas/Blog').add({
