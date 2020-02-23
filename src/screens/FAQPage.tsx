@@ -74,7 +74,7 @@ class FAQPage extends Component<Props, State> {
                                 res = await FAQ.AddGainWeight(values.title, values.description, values.resource);
                             }
                             else if (values.type === 'AddHealthLife') {
-                                res = await FAQ.AddGainWeight(values.title, values.description, values.resource);
+                                res = await FAQ.AddHealthLife(values.title, values.description, values.resource);
                             }
                             else if (values.type === 'AddInterestingFacts') {
                                 res = await FAQ.AddInterestingFacts(values.title, values.description, values.resource);

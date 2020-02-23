@@ -28,27 +28,50 @@ export class FirebaseFAQ {
          * For example, questions[0] = {Başlık:"", Cevap:"", Kaynak: ""}
          * Full Document is like { "Soru": [ { First Question }, { Second Question }, ]  }
          */
+
         let snapshot: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> = await this.firestoreInstance
             .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('DoğruBilinenYanlışlar')
-            .get();
+            .doc('DoğruBilinenYanlışlar').get();
 
-        let allData = snapshot.data() as FAQData;
-        let questionArray = allData.Soru;
+        if (snapshot.exists) {
+            console.log("There is the doc");
+            let allData = snapshot.data() as FAQData;
+            let questionArray = allData.Soru;
+            /**
+             * This part of function adds the new question to Question Array.
+             */
+            questionArray.push({
+                Başlık: header,
+                Cevap: answer,
+                Kaynak: references,
+            });
 
-        /**
-         * This part of function adds the new question to Question Array.
-         */
-        questionArray.push({
-            Başlık: header,
-            Cevap: answer,
-            Kaynak: references,
-        });
+            await this.firestoreInstance
+                .collection('/BeslenmeApp/AllDatas/SSS')
+                .doc('DoğruBilinenYanlışlar')
+                .set({"Soru":questionArray});
 
-        await this.firestoreInstance
-            .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('DoğruBilinenYanlışlar')
-            .set(questionArray);
+
+        } else {
+
+            await this.firestoreInstance
+                .collection('/BeslenmeApp/AllDatas/SSS')
+                .doc('DoğruBilinenYanlışlar').set({
+                    "Soru": [
+                        {
+                            Başlık: header,
+                            Cevap: answer,
+                            Kaynak: references,
+                        },
+                    ]
+                });
+
+        }
+
+
+
+
+
     };
 
     /**
@@ -64,41 +87,48 @@ export class FirebaseFAQ {
          * For example, questions[0] = {Başlık:"", Cevap:"", Kaynak: ""}
          * Full Document is like { "Soru": [ { First Question }, { Second Question }, ]  }
          */
+
         let snapshot: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> = await this.firestoreInstance
             .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('KiloAlma')
-            .get();
+            .doc('KiloAlma').get();
 
-        /**
-         * Document is like:
-         *
-         * { "Soru":
-         *  [
-         *          {
-         *              " Başlık": "Kilo nasıl verilir",
-         *              "Cevap": "Kilo vermek için..",
-         *              "Kaynak ": ""
-         *          }
-         *      ]
-         *  }
-         *
-         */
-        let allData = snapshot.data() as FAQData;
-        let questionArray = allData.Soru;
+        if (snapshot.exists) {
 
-        /**
-         * This part of function adds the new question to Question Array.
-         */
-        questionArray.push({
-            Başlık: header,
-            Cevap: answer,
-            Kaynak: references,
-        });
 
-        await this.firestoreInstance
-            .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('KiloAlma')
-            .set(questionArray);
+            let allData = snapshot.data() as FAQData;
+            let questionArray = allData.Soru;
+            /**
+             * This part of function adds the new question to Question Array.
+             */
+            questionArray.push({
+                Başlık: header,
+                Cevap: answer,
+                Kaynak: references,
+            });
+
+            await this.firestoreInstance
+                .collection('/BeslenmeApp/AllDatas/SSS')
+                .doc('KiloAlma')
+                .set({"Soru":questionArray});
+
+
+        } else {
+
+            await this.firestoreInstance
+                .collection('/BeslenmeApp/AllDatas/SSS')
+                .doc('KiloAlma').set({
+                    "Soru": [
+                        {
+                            Başlık: header,
+                            Cevap: answer,
+                            Kaynak: references,
+                        },
+                    ]
+                });
+
+        }
+
+
     };
 
     /**
@@ -114,41 +144,47 @@ export class FirebaseFAQ {
          * For example, questions[0] = {Başlık:"", Cevap:"", Kaynak: ""}
          * Full Document is like { "Soru": [ { First Question }, { Second Question }, ]  }
          */
-        let snapshot: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> = await this.firestoreInstance
+
+        let snapshot: firebase.firestore.DocumentData = await this.firestoreInstance
             .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('KiloVerme')
-            .get();
+            .doc('KiloVerme').get();
 
-        /**
-         * Document is like:
-         *
-         * { "Soru":
-         *  [
-         *          {
-         *              " Başlık": "Kilo nasıl verilir",
-         *              "Cevap": "Kilo vermek için..",
-         *              "Kaynak ": ""
-         *          }
-         *      ]
-         *  }
-         *
-         */
-        let allData = snapshot.data() as FAQData;
-        let questionArray = allData.Soru;
+        if (snapshot.exists) {
 
-        /**
-         * This part of function adds the new question to Question Array.
-         */
-        questionArray.push({
-            Başlık: header,
-            Cevap: answer,
-            Kaynak: references,
-        });
 
-        await this.firestoreInstance
-            .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('KiloVerme')
-            .set(questionArray);
+            let allData = snapshot.data() as FAQData;
+            let questionArray = allData.Soru;
+            /**
+             * This part of function adds the new question to Question Array.
+             */
+            questionArray.push({
+                Başlık: header,
+                Cevap: answer,
+                Kaynak: references,
+            });
+
+            await this.firestoreInstance
+                .collection('/BeslenmeApp/AllDatas/SSS')
+                .doc('KiloVerme')
+                .set({"Soru":questionArray});
+
+
+        } else {
+
+            await this.firestoreInstance
+                .collection('/BeslenmeApp/AllDatas/SSS')
+                .doc('KiloVerme').set({
+                    "Soru": [
+                        {
+                            Başlık: header,
+                            Cevap: answer,
+                            Kaynak: references,
+                        },
+                    ]
+                });
+
+        }
+
     };
 
     /**
@@ -164,41 +200,46 @@ export class FirebaseFAQ {
          * For example, questions[0] = {Başlık:"", Cevap:"", Kaynak: ""}
          * Full Document is like { "Soru": [ { First Question }, { Second Question }, ]  }
          */
-        let snapshot: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> = await this.firestoreInstance
+
+        let snapshot: firebase.firestore.DocumentData = await this.firestoreInstance
             .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('SağlıklıYaşam')
-            .get();
+            .doc('SağlıklıYaşam').get();
 
-        /**
-         * Document is like:
-         *
-         * { "Soru":
-         *  [
-         *          {
-         *              " Başlık": "Kilo nasıl verilir",
-         *              "Cevap": "Kilo vermek için..",
-         *              "Kaynak ": ""
-         *          }
-         *      ]
-         *  }
-         *
-         */
-        let allData = snapshot.data() as FAQData;
-        let questionArray = allData.Soru;
+        if (snapshot.exists) {
 
-        /**
-         * This part of function adds the new question to Question Array.
-         */
-        questionArray.push({
-            Başlık: header,
-            Cevap: answer,
-            Kaynak: references,
-        });
 
-        await this.firestoreInstance
-            .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('SağlıklıYaşam')
-            .set(questionArray);
+            let allData = snapshot.data() as FAQData;
+            let questionArray = allData.Soru;
+            /**
+             * This part of function adds the new question to Question Array.
+             */
+            questionArray.push({
+                Başlık: header,
+                Cevap: answer,
+                Kaynak: references,
+            });
+
+            await this.firestoreInstance
+                .collection('/BeslenmeApp/AllDatas/SSS')
+                .doc('SağlıklıYaşam')
+                .set({"Soru":questionArray});
+
+
+        } else {
+
+            await this.firestoreInstance
+                .collection('/BeslenmeApp/AllDatas/SSS')
+                .doc('SağlıklıYaşam').set({
+                    "Soru": [
+                        {
+                            Başlık: header,
+                            Cevap: answer,
+                            Kaynak: references,
+                        },
+                    ]
+                });
+
+        }
     };
     /**
      * Şaşırtan Bilgiler
@@ -213,40 +254,46 @@ export class FirebaseFAQ {
          * For example, questions[0] = {Başlık:"", Cevap:"", Kaynak: ""}
          * Full Document is like { "Soru": [ { First Question }, { Second Question }, ]  }
          */
-        let snapshot: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> = await this.firestoreInstance
+
+
+        let snapshot: firebase.firestore.DocumentData = await this.firestoreInstance
             .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('ŞaşırtanBilgiler')
-            .get();
+            .doc('ŞaşırtanBilgiler').get();
 
-        /**
-         * Document is like:
-         *
-         * { "Soru":
-         *  [
-         *          {
-         *              " Başlık": "Kilo nasıl verilir",
-         *              "Cevap": "Kilo vermek için..",
-         *              "Kaynak ": ""
-         *          }
-         *      ]
-         *  }
-         *
-         */
-        let allData = snapshot.data() as FAQData;
-        let questionArray = allData.Soru;
+        if (snapshot.exists) {
 
-        /**
-         * This part of function adds the new question to Question Array.
-         */
-        questionArray.push({
-            Başlık: header,
-            Cevap: answer,
-            Kaynak: references,
-        });
 
-        await this.firestoreInstance
-            .collection('/BeslenmeApp/AllDatas/SSS')
-            .doc('ŞaşırtanBilgiler')
-            .set(questionArray);
+            let allData = snapshot.data() as FAQData;
+            let questionArray = allData.Soru;
+            /**
+             * This part of function adds the new question to Question Array.
+             */
+            questionArray.push({
+                Başlık: header,
+                Cevap: answer,
+                Kaynak: references,
+            });
+
+            await this.firestoreInstance
+                .collection('/BeslenmeApp/AllDatas/SSS')
+                .doc('ŞaşırtanBilgiler')
+                .set({"Soru":questionArray});
+
+
+        } else {
+
+            await this.firestoreInstance
+                .collection('/BeslenmeApp/AllDatas/SSS')
+                .doc('ŞaşırtanBilgiler').set({
+                    "Soru": [
+                        {
+                            Başlık: header,
+                            Cevap: answer,
+                            Kaynak: references,
+                        },
+                    ]
+                });
+
+        }
     };
 }
