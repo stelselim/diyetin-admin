@@ -1,6 +1,5 @@
 import firebase, { firestore } from 'firebase';
 
-
 export class FirebaseBlogOperations {
     authFirebase: firebase.auth.Auth;
     firestoreFirebase: firebase.firestore.Firestore;
@@ -21,32 +20,23 @@ export class FirebaseBlogOperations {
      * @param {string} references the sources for blog.
      * @param {string} author  name & surname of blog writer
      */
-    addNewBlog = async (
-        header: string,
-        references: string,
-        imageUrl: string,
-        mainIdea: string,
-        blogText: string,
-        author: string
-    ) => {
+    addNewBlog = async (header: string, references: string, imageUrl: string, mainIdea: string, blogText: string, author: string) => {
         if (header.length > 100) {
             throw 'Header should be less than 100 Characters';
         }
         try {
-            let ans = await this.firestoreFirebase
-                .collection('/BeslenmeApp/AllDatas/Blog')
-                .add({
-                    EklenmeTarihi: new Date(),
-                    BlogYazısı: blogText,
-                    AnaDüşünce: mainIdea,
-                    Başlık: header,
-                    Kaynaklar: references,
-                    Resim: imageUrl,
-                    Yazar: author,
-                });
+            let ans = await this.firestoreFirebase.collection('/BeslenmeApp/AllDatas/Blog').add({
+                EklenmeTarihi: new Date(),
+                BlogYazısı: blogText,
+                AnaDüşünce: mainIdea,
+                Başlık: header,
+                Kaynaklar: references,
+                Resim: imageUrl,
+                Yazar: author,
+            });
             return ans;
-        }catch(e){
-            throw(e);
+        } catch (e) {
+            throw e;
         }
     };
 
@@ -81,20 +71,17 @@ export class FirebaseBlogOperations {
     /**
      * @param {firestore.DocumentSnapshot} documentReference this is the document reference of the blog post that would like to delete.
      */
-    deleteBlogPost = async (documentReference: firestore.DocumentSnapshot,) => {
+    deleteBlogPost = async (documentReference: firestore.DocumentSnapshot) => {
         let documentPath = documentReference.ref.path;
         await this.firestoreFirebase.doc(documentPath).delete();
     };
 
     /**
-     * @param {ArrayBuffer} image 
+     * @param {ArrayBuffer} image
      * @returns {string} download url
      */
-    uploadImage = async(image: ArrayBuffer) =>{
-        let answer = await this.storageFirebase.ref().put(image);
-        return answer.downloadURL;
-    }
-
+    uploadImage = async (image: ArrayBuffer) => {
+        let answer = await this.storageFirebase.ref('blog').put(image);
+        return answer.ref.getDownloadURL();
+    };
 }
-
-

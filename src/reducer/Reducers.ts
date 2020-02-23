@@ -9,15 +9,12 @@ interface ActionUser {
 let firebaseuserfunc = () => {
     if (localStorage.getItem('firebaseuser') !== '' && localStorage.getItem('firebaseuser') !== null)
         return JSON.parse(localStorage.getItem('firebaseuser')!) as firebase.User;
-    else
-        return '';
-}
+    else return '';
+};
 
 let INITIAL_STATE = {
-    username: localStorage.getItem('username')
-        ? localStorage.getItem('username')
-        : '',
-    firebaseuser: firebaseuserfunc()
+    username: localStorage.getItem('username') ? localStorage.getItem('username') : '',
+    firebaseuser: firebaseuserfunc(),
 };
 
 let user = (state = INITIAL_STATE, action: ActionUser) => {

@@ -19,10 +19,7 @@ export class FirebaseAuth {
      */
 
     loginWithEmailAndPassword = async (email: string, password: string) => {
-        let answer = await this.authFirebase.signInWithEmailAndPassword(
-            email,
-            password
-        );
+        let answer = await this.authFirebase.signInWithEmailAndPassword(email, password);
         return answer.user;
     };
 
@@ -33,19 +30,11 @@ export class FirebaseAuth {
      * @returns {firebase.User} User info and all data required.
      */
 
-    signUpWithEmailAndPasswod = async (
-        email: string,
-        password: string,
-        name: string,
-        surname: string
-    ) => {
+    signUpWithEmailAndPasswod = async (email: string, password: string, name: string, surname: string) => {
         /**
          * In here, create a new user with email, password.
          */
-        let answer = await this.authFirebase.createUserWithEmailAndPassword(
-            email,
-            password
-        );
+        let answer = await this.authFirebase.createUserWithEmailAndPassword(email, password);
         if (answer.user === null) {
             throw 'User can not be signed up';
         }

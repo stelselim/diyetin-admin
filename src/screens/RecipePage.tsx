@@ -65,16 +65,8 @@ class RecipePage extends Component<Props, State> {
                                 render={({ field, form, meta }) => {
                                     return (
                                         <BFormGroup>
-                                            <BForm.Control
-                                                type="text"
-                                                {...field}
-                                                placeholder="Başlık"
-                                            />
-                                            {meta.touched && meta.error && (
-                                                <div className="text-danger">
-                                                    {meta.error}
-                                                </div>
-                                            )}
+                                            <BForm.Control type="text" {...field} placeholder="Başlık" />
+                                            {meta.touched && meta.error && <div className="text-danger">{meta.error}</div>}
                                         </BFormGroup>
                                     );
                                 }}
@@ -84,18 +76,8 @@ class RecipePage extends Component<Props, State> {
                                 //@ts-ignore
                                 render={({ field, form, meta }) => (
                                     <BFormGroup>
-                                        <BForm.Control
-                                            as="textarea"
-                                            rows="6"
-                                            type="text"
-                                            {...field}
-                                            placeholder="Detay"
-                                        />
-                                        {meta.touched && meta.error && (
-                                            <div className="text-danger">
-                                                {meta.error}
-                                            </div>
-                                        )}
+                                        <BForm.Control as="textarea" rows="6" type="text" {...field} placeholder="Detay" />
+                                        {meta.touched && meta.error && <div className="text-danger">{meta.error}</div>}
                                     </BFormGroup>
                                 )}
                             />

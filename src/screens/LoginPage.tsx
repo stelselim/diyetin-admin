@@ -59,15 +59,14 @@ class LoginPage extends Component<Props, State> {
                             },
                         });
                         let auth = new FirebaseAuth();
-                        try { 
-                            const res = await auth.loginWithEmailAndPassword(
-                                values.username,
-                                values.password
-                            ); 
-                            if(res === null)
-                                throw("Not a valid user");
+                        try {
+                            const res = await auth.loginWithEmailAndPassword(values.username, values.password);
+                            if (res === null) throw 'Not a valid user';
                             localStorage.setItem('username', values.username);
-                            this.props.setUser({ username: values.username, firebaseuser: res! });
+                            this.props.setUser({
+                                username: values.username,
+                                firebaseuser: res!,
+                            });
                             this.props.history.push('/');
                         } catch (e) {
                             console.log(e);
@@ -82,17 +81,8 @@ class LoginPage extends Component<Props, State> {
                                 render={({ field, form, meta }) => {
                                     return (
                                         <BFormGroup>
-                                            <BForm.Control
-                                                type="text"
-                                                autoComplete="off"
-                                                {...field}
-                                                placeholder="Username"
-                                            />
-                                            {meta.touched && meta.error && (
-                                                <div className="text-danger">
-                                                    {meta.error}
-                                                </div>
-                                            )}
+                                            <BForm.Control type="text" autoComplete="off" {...field} placeholder="Username" />
+                                            {meta.touched && meta.error && <div className="text-danger">{meta.error}</div>}
                                         </BFormGroup>
                                     );
                                 }}
@@ -102,17 +92,8 @@ class LoginPage extends Component<Props, State> {
                                 //@ts-ignore
                                 render={({ field, form, meta }) => (
                                     <BFormGroup>
-                                        <BForm.Control
-                                            type="password"
-                                            autoComplete="off"
-                                            {...field}
-                                            placeholder="Password"
-                                        />
-                                        {meta.touched && meta.error && (
-                                            <div className="text-danger">
-                                                {meta.error}
-                                            </div>
-                                        )}
+                                        <BForm.Control type="password" autoComplete="off" {...field} placeholder="Password" />
+                                        {meta.touched && meta.error && <div className="text-danger">{meta.error}</div>}
                                     </BFormGroup>
                                 )}
                             />
@@ -144,7 +125,4 @@ const mapDispatchToProps = (dispatch: any) =>
         dispatch
     );
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withRouter(LoginPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginPage));

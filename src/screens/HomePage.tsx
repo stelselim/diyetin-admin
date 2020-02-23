@@ -10,13 +10,10 @@ interface Props extends RouteComponentProps {
 }
 
 export class HomePage extends Component<Props> {
-
     render() {
         return (
             <Container>
-                <div style={{textAlign: 'center', fontSize: '3rem'}}>
-                    Hoş geldin {this.props.user.username}
-                </div>
+                <div style={{ textAlign: 'center', fontSize: '3rem' }}>Hoş geldin {this.props.user.username}</div>
             </Container>
         );
     }
@@ -33,7 +30,4 @@ const mapStateToProps = (state: StateRedux) => {
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({}, dispatch);
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withRouter(HomePage));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HomePage));

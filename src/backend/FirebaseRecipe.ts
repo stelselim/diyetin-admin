@@ -1,15 +1,11 @@
 import firebase from 'firebase';
 
+export class FirebaseRecipe {
+    firestoreInstance: firebase.firestore.Firestore;
 
-export class FirebaseRecipe{
-
-    firestoreInstance:firebase.firestore.Firestore;
-        
-    constructor(){
-        this.firestoreInstance  = firebase.firestore();
+    constructor() {
+        this.firestoreInstance = firebase.firestore();
     }
 
-    addNewRecipe = async() => {
-        
-    }
+    addNewRecipe = async () => {};
 }

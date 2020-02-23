@@ -8,33 +8,51 @@ import LoginPage from './screens/LoginPage';
 import NavBar from './components/NavBar/NavBar';
 import BlogPage from './screens/BlogPage';
 import RecipePage from './screens/RecipePage';
+import FAQPage from './screens/FAQPage';
 
 interface Props {
     user: User;
 }
 
-export class AppNav extends Component<Props>{
+export class AppNav extends Component<Props> {
     render() {
         return (
             <Router>
                 <div>
                     <NavBar />
                     <Route path="/login" exact component={LoginPage} />
-                    <Route path="/addblog" exact render={() => {
-                        if (this.props.user.username === '')
-                            return (<Redirect to={{ pathname: '/login' }} />)
-                        return (<BlogPage />)
-                    }} />
-                    <Route path="/addrecipe" exact render={() => {
-                        if (this.props.user.username === '')
-                            return (<Redirect to={{ pathname: '/login' }} />)
-                        return (<RecipePage />)
-                    }} /> 
-                    <Route path="/" exact render={() => {
-                        if (this.props.user.username === '')
-                            return (<Redirect to={{ pathname: '/login' }} />)
-                        return (<HomePage />)
-                    }} />
+                    <Route
+                        path="/addblog"
+                        exact
+                        render={() => {
+                            if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
+                            return <BlogPage />;
+                        }}
+                    />
+                    <Route
+                        path="/addrecipe"
+                        exact
+                        render={() => {
+                            if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
+                            return <RecipePage />;
+                        }}
+                    />
+                    <Route
+                        path="/faq"
+                        exact
+                        render={() => {
+                            if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
+                            return <FAQPage />;
+                        }}
+                    />
+                    <Route
+                        path="/"
+                        exact
+                        render={() => {
+                            if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
+                            return <HomePage />;
+                        }}
+                    />
                 </div>
             </Router>
         );
@@ -52,7 +70,4 @@ const mapStateToProps = (state: StateRedux) => {
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({}, dispatch);
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AppNav);
+export default connect(mapStateToProps, mapDispatchToProps)(AppNav);
