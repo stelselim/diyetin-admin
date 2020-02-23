@@ -1,5 +1,11 @@
 import firebase from 'firebase';
 
+
+interface QuoteData {
+    "sözler":Array<string>
+}
+
+
 export class QuoteOfDay {
     firestoreInstance: firebase.firestore.Firestore;
 
@@ -14,17 +20,27 @@ export class QuoteOfDay {
      * @example2 newQuote = "Koşmayı bıraktığın gün, vardığın gün. - E. Soley"
      */
     addNewQuote = async (newQuote: string) => {
-        let quoteData = (
-            await this.firestoreInstance
-                .collection('/BeslenmeApp/AllDatas/GününSözü')
-                .doc('doc')
-                .get()
-        ).data;
-        let a: firebase.firestore.DocumentData;
 
+        let snapshot: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> = await this.firestoreInstance
+            .collection('/BeslenmeApp/AllDatas/GününSözü')
+            .doc('doc')
+            .get();
+        if (snapshot.exists) {
+            let quoteData = snapshot.data() as QuoteData;
+            quoteData.sözler.push(newQuote);
+            await this.firestoreInstance
+            .collection('/BeslenmeApp/AllDatas/GününSözü')
+            .doc('doc').set({"sözler":quoteData});
+        }else{
+            let arrayNew: Array<string>= [newQuote];
+            await this.firestoreInstance
+            .collection('/BeslenmeApp/AllDatas/GününSözü')
+            .doc('doc')
+            .set({"sözler":arrayNew});
+        }
         //       let quoteArray: Array<string> = quoteData;
         //       quoteArray.push(newQuote);
 
-        //   await this.firestoreInstance.collection("/BeslenmeApp/AllDatas/GününSözü").doc("doc").set(quoteArray);
+        //   await this.firestoreInstance.collection("/BeslenmeApp/AllDatas/GününSözü").doc("doc").set({"sözler":quoteArray});
     };
 }
