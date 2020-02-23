@@ -66,7 +66,7 @@ export class FirebaseAuth {
                 registerDate: new Date(),
             });
 
-        return answer;
+        return answer.user;
     };
 
     /**

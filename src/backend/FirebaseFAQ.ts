@@ -1,7 +1,6 @@
 import firebase from 'firebase';
 
-interface FAQData 
-{
+interface FAQData {
     Soru:
     Array<
         {
@@ -35,10 +34,11 @@ export class FirebaseFAQ {
         * For example, questions[0] = {Başlık:"", Cevap:"", Kaynak: ""}
         * Full Document is like { "Soru": [ { First Question }, { Second Question }, ]  }
         */
+        
         let snapshot: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> = await this.firestoreInstance.collection("/BeslenmeApp/AllDatas/SSS").doc("DoğruBilinenYanlışlar").get();
 
 
-      
+
         let allData = snapshot.data() as FAQData;
         let questionArray = allData.Soru;
 
