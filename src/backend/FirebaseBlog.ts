@@ -1,5 +1,12 @@
 import firebase, { firestore } from 'firebase';
 
+
+interface details{
+    title: string,
+    author: string,
+    DocumentRefenre: firebase.firestore.DocumentReference,
+}
+
 export class FirebaseBlogOperations {
     authFirebase: firebase.auth.Auth;
     firestoreFirebase: firebase.firestore.Firestore;
@@ -83,5 +90,36 @@ export class FirebaseBlogOperations {
     uploadImage = async (image: ArrayBuffer) => {
         let answer = await this.storageFirebase.ref('blog').put(image);
         return answer.ref.getDownloadURL();
+    }; 
+
+    /**
+     * @returns {firestore.QueryDocumentSnapshot<firestore.DocumentData>[]}
+     */
+    getBlogDocs = async () => {
+        return (await this.firestoreFirebase.collection("/BeslenmeApp/AllDatas/Blog").get()).docs;
+    }
+    /**
+     * @param {firebase.firestore.DocumentSnapshot} data this is the DocumentSnapshot for individual recipes.
+     * @returns {details} all necessary datas for deleting updating a document
+     */
+    getDetailsOfDocument = async( data: firebase.firestore.DocumentSnapshot) => {
+        
+
+        return {
+            title: data.data()!.Başlık,
+            author: data.data()!.Yazar,
+            DocumentRefenre: data.ref,
+        } as details;
+       
+
+    };
+
+    /**
+     * @param {firebase.firestore.DocumentReference} documentReference the reference of a specific document
+     */
+    deleteRecipe = async(documentReference: firebase.firestore.DocumentReference)=>{
+        let urlImage: string = (await documentReference.get()).data()!.Resim;
+        await firebase.storage().refFromURL(urlImage).delete();
+        await documentReference.delete();
     };
 }

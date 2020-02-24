@@ -1,5 +1,12 @@
 import firebase from 'firebase';
 
+interface details{
+    nameOfRecipe: string,
+    personWhoCooks: string,
+    DocumentRefenre: firebase.firestore.DocumentReference,
+}
+
+
 export class FirebaseRecipe {
     firestoreInstance: firebase.firestore.Firestore;
     storageFirebase: firebase.storage.Storage;
@@ -248,5 +255,97 @@ export class FirebaseRecipe {
     uploadImage = async (image: ArrayBuffer) => {
         let answer = await this.storageFirebase.ref('blog').put(image);
         return answer.ref.getDownloadURL();
+    };
+
+
+    /**
+     * @return {firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>[]} arrayOfDocs all documents for HighCalori Recipes
+     */
+    getHighCalories = async() =>{
+        let arrayOfDocs: Array<firebase.firestore.DocumentSnapshot>  =  (await this.firestoreInstance.collection("/BeslenmeApp/AllDatas/Tarifler/Kategoriler/YüksekKalorili").get()).docs;
+
+        return arrayOfDocs;
+        
+    };
+
+    /**
+     * @return {firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>[]} arrayOfDocs all documents for HighCalori Recipes
+     */
+    getLowCalories = async() =>{
+        let arrayOfDocs: Array<firebase.firestore.DocumentSnapshot>  =  (await this.firestoreInstance.collection("/BeslenmeApp/AllDatas/Tarifler/Kategoriler/DüşükKalorili").get()).docs;
+
+        return arrayOfDocs;
+        
+    };
+
+
+    /**
+     * @return {firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>[]} arrayOfDocs all documents for HighCalori Recipes
+     */
+    getFitDeserts = async() =>{
+        let arrayOfDocs: Array<firebase.firestore.DocumentSnapshot>  =  (await this.firestoreInstance.collection("/BeslenmeApp/AllDatas/Tarifler/Kategoriler/FitTatlılar").get()).docs;
+
+        return arrayOfDocs;
+        
+    };
+
+
+    /**
+     * @return {firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>[]} arrayOfDocs all documents for HighCalori Recipes
+     */
+    getFastRecipes = async() =>{
+        let arrayOfDocs: Array<firebase.firestore.DocumentSnapshot>  =  (await this.firestoreInstance.collection("/BeslenmeApp/AllDatas/Tarifler/Kategoriler/HızlıTarifler").get()).docs;
+
+        return arrayOfDocs;
+        
+    };
+
+
+    /**
+     * @return {firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>[]} arrayOfDocs all documents for HighCalori Recipes
+     */
+    getLookingNew = async() =>{
+        let arrayOfDocs: Array<firebase.firestore.DocumentSnapshot>  =  (await this.firestoreInstance.collection("/BeslenmeApp/AllDatas/Tarifler/Kategoriler/DeğişiklikArayanlar").get()).docs;
+
+        return arrayOfDocs;
+        
+    };
+
+    /**
+     * @return {firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>[]} arrayOfDocs all documents for HighCalori Recipes
+     */
+    getStudentRecipe = async() =>{
+        let arrayOfDocs: Array<firebase.firestore.DocumentSnapshot>  =  (await this.firestoreInstance.collection("/BeslenmeApp/AllDatas/Tarifler/Kategoriler/ÖğrencilereÖzel").get()).docs;
+
+        return arrayOfDocs;
+        
+    };
+
+  
+
+    /**
+     * @param {firebase.firestore.DocumentSnapshot} data this is the DocumentSnapshot for individual recipes.
+     * @returns {details} all necessary datas for deleting updating a document
+     */
+    getDetailsOfDocument = async( data: firebase.firestore.DocumentSnapshot) => {
+        
+
+        return {
+            nameOfRecipe: data.data()!.Tarifinİsmi,
+            personWhoCooks: data.data()!.YapanKişi,
+            DocumentRefenre: data.ref,
+        } as details;
+       
+
+    };
+
+
+    /**
+     * @param {firebase.firestore.DocumentReference} documentReference the reference of a specific document
+     */
+    deleteRecipe = async(documentReference: firebase.firestore.DocumentReference)=>{
+        let urlImage: string = (await documentReference.get()).data()!.Resim;
+        await firebase.storage().refFromURL(urlImage).delete();
+        await documentReference.delete();
     };
 }
