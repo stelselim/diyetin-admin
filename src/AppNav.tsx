@@ -10,6 +10,7 @@ import BlogPage from './screens/BlogPage';
 import RecipePage from './screens/RecipePage';
 import FAQPage from './screens/FAQPage';
 import QODPage from './screens/QuotePage';
+import DeleteRecipePage from './screens/DeleteRecipePage';
 
 interface Props {
     user: User;
@@ -44,6 +45,14 @@ export class AppNav extends Component<Props> {
                         render={() => {
                             if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
                             return <RecipePage />;
+                        }}
+                    />
+                    <Route
+                        path="/delrecipe"
+                        exact
+                        render={() => {
+                            if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
+                            return <DeleteRecipePage />;
                         }}
                     />
                     <Route

@@ -6,6 +6,7 @@ import BForm from 'react-bootstrap/Form';
 import BFormGroup from 'react-bootstrap/FormGroup';
 import * as Yup from 'yup';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import { Formik, Field, Form } from 'formik';
 import { FirebaseRecipe } from '../backend/FirebaseRecipe';
@@ -101,6 +102,9 @@ class RecipePage extends Component<Props, State> {
     render() {
         return (
             <Container>
+                <Link style={{ color: 'blue' }} to="delrecipe">
+                    Tarifi Sil
+                </Link>
                 <Formik
                     initialValues={this.state.user}
                     onSubmit={async (values, actions) => {
