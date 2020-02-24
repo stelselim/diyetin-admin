@@ -89,7 +89,7 @@ class FAQPage extends Component<Props, State> {
                                 render={({ field, form, meta }) => {
                                     return (
                                         <BFormGroup>
-                                            <BForm.Label>Example select</BForm.Label>
+                                            <BForm.Label>SSS Tipi</BForm.Label>
                                             <BForm.Control as="select" {...field} placeholder="Başlık (Max 80 karakter)">
                                                 <option value="AddGainWeight">Kilo Alma</option>
                                                 <option value="AddLoseWeight">Kilo Verme</option>

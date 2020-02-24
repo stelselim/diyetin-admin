@@ -1,9 +1,9 @@
 import firebase from 'firebase';
 
-interface details{
+export interface details{
     nameOfRecipe: string,
     personWhoCooks: string,
-    DocumentRefenre: firebase.firestore.DocumentReference,
+    DocumentReference: firebase.firestore.DocumentReference,
 }
 
 
@@ -253,7 +253,8 @@ export class FirebaseRecipe {
      * @returns {string} download url
      */
     uploadImage = async (image: ArrayBuffer) => {
-        let answer = await this.storageFirebase.ref('blog').put(image);
+        let date = new Date().getTime()
+        let answer = await this.storageFirebase.ref('Tarif/' + date).put(image);
         return answer.ref.getDownloadURL();
     };
 
@@ -263,9 +264,7 @@ export class FirebaseRecipe {
      */
     getHighCalories = async() =>{
         let arrayOfDocs: Array<firebase.firestore.DocumentSnapshot>  =  (await this.firestoreInstance.collection("/BeslenmeApp/AllDatas/Tarifler/Kategoriler/YüksekKalorili").get()).docs;
-
         return arrayOfDocs;
-        
     };
 
     /**
@@ -327,13 +326,13 @@ export class FirebaseRecipe {
      * @param {firebase.firestore.DocumentSnapshot} data this is the DocumentSnapshot for individual recipes.
      * @returns {details} all necessary datas for deleting updating a document
      */
-    getDetailsOfDocument = async( data: firebase.firestore.DocumentSnapshot) => {
+    getDetailsOfDocument = ( data: firebase.firestore.DocumentSnapshot) => {
         
 
         return {
             nameOfRecipe: data.data()!.Tarifinİsmi,
             personWhoCooks: data.data()!.YapanKişi,
-            DocumentRefenre: data.ref,
+            DocumentReference: data.ref,
         } as details;
        
 

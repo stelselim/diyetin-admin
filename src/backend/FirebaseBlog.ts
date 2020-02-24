@@ -4,7 +4,7 @@ import firebase, { firestore } from 'firebase';
 interface details{
     title: string,
     author: string,
-    DocumentRefenre: firebase.firestore.DocumentReference,
+    DocumentReference: firebase.firestore.DocumentReference,
 }
 
 export class FirebaseBlogOperations {
@@ -76,19 +76,12 @@ export class FirebaseBlogOperations {
     };
 
     /**
-     * @param {firestore.DocumentSnapshot} documentReference this is the document reference of the blog post that would like to delete.
-     */
-    deleteBlogPost = async (documentReference: firestore.DocumentSnapshot) => {
-        let documentPath = documentReference.ref.path;
-        await this.firestoreFirebase.doc(documentPath).delete();
-    };
-
-    /**
      * @param {ArrayBuffer} image
      * @returns {string} download url
      */
     uploadImage = async (image: ArrayBuffer) => {
-        let answer = await this.storageFirebase.ref('blog').put(image);
+        let date = new Date().getTime()
+        let answer = await this.storageFirebase.ref('Blog/' + date).put(image);
         return answer.ref.getDownloadURL();
     }; 
 
@@ -102,13 +95,13 @@ export class FirebaseBlogOperations {
      * @param {firebase.firestore.DocumentSnapshot} data this is the DocumentSnapshot for individual recipes.
      * @returns {details} all necessary datas for deleting updating a document
      */
-    getDetailsOfDocument = async( data: firebase.firestore.DocumentSnapshot) => {
+    getDetailsOfDocument = ( data: firebase.firestore.DocumentSnapshot) => {
         
 
         return {
             title: data.data()!.Başlık,
             author: data.data()!.Yazar,
-            DocumentRefenre: data.ref,
+            DocumentReference: data.ref,
         } as details;
        
 
@@ -117,7 +110,7 @@ export class FirebaseBlogOperations {
     /**
      * @param {firebase.firestore.DocumentReference} documentReference the reference of a specific document
      */
-    deleteRecipe = async(documentReference: firebase.firestore.DocumentReference)=>{
+    deleteBlogPost = async(documentReference: firebase.firestore.DocumentReference)=>{
         let urlImage: string = (await documentReference.get()).data()!.Resim;
         await firebase.storage().refFromURL(urlImage).delete();
         await documentReference.delete();

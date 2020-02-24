@@ -6,6 +6,7 @@ import Image from 'react-bootstrap/Image';
 import BFormGroup from 'react-bootstrap/FormGroup';
 import * as Yup from 'yup';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import { Formik, Field, Form } from 'formik';
 import { FirebaseBlogOperations } from '../backend/FirebaseBlog';
@@ -75,6 +76,9 @@ class AddBlogPage extends Component<Props, State> {
     render() {
         return (
             <Container>
+                <Link style={{ color: 'blue' }} to="delblog">
+                    Blogu Sil
+                </Link>
                 <Formik
                     initialValues={this.state.user}
                     onSubmit={async (values, actions) => {

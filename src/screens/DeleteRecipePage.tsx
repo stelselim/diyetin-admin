@@ -6,56 +6,38 @@ import BForm from 'react-bootstrap/Form';
 import BFormGroup from 'react-bootstrap/FormGroup';
 import * as Yup from 'yup';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { FaTrash, FaThumbsDown } from 'react-icons/fa'
 import Row from 'react-bootstrap/Row';
 import { Formik, Field, Form } from 'formik';
-import { FirebaseRecipe } from '../backend/FirebaseRecipe';
+import { FirebaseRecipe, details } from '../backend/FirebaseRecipe';
 const toArrayBuffer = require('to-array-buffer');
-
-const valSchema = Yup.object().shape({
-    title: Yup.string()
-        .min(2)
-        .max(70)
-        .required('Boş bırakılamaz'),
-    ingredients: Yup.string()
-        .min(2)
-        .required('Boş bırakılamaz'),
-    howToCook: Yup.string()
-        .min(2)
-        .required('Boş bırakılamaz'),
-    protein: Yup.number()
-        .min(0)
-        .required('Boş bırakılamaz'),
-    carb: Yup.number()
-        .min(0)
-        .required('Boş bırakılamaz'),
-    fat: Yup.number()
-        .min(0)
-        .required('Boş bırakılamaz'),
-    calorie: Yup.number()
-        .min(0)
-        .required('Boş bırakılamaz'),
-    servingSize: Yup.string()
-        .min(0)
-        .required('Boş bırakılamaz'),
-    nameSurname: Yup.string()
-        .min(0)
-        .required('Boş bırakılamaz'),
-    type: Yup.string()
-        .min(1)
-        .required("Boş bıraklılamaz"),
-    image: Yup.mixed().required('Boş bırakılamaz'),
-});
 
 interface Props extends RouteComponentProps { }
 
 interface State {
+    dataFast: Array<firebase.firestore.DocumentSnapshot>,
+    dataFit: Array<firebase.firestore.DocumentSnapshot>,
+    dataHigh: Array<firebase.firestore.DocumentSnapshot>,
+    dataLooking: Array<firebase.firestore.DocumentSnapshot>,
+    dataLow: Array<firebase.firestore.DocumentSnapshot>,
+    dataStudent: Array<firebase.firestore.DocumentSnapshot>
 }
 
 class DeleteRecipePage extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            dataFast: [],
+            dataFit: [],
+            dataHigh: [],
+            dataLooking: [],
+            dataLow: [],
+            dataStudent: []
         };
+    }
+
+    async componentDidMount() {
+        await this.getItems()
     }
 
 
@@ -70,39 +52,120 @@ class DeleteRecipePage extends Component<Props, State> {
         });
     };
 
-    renderRecipe = (data: Array<any>, title: string) => {
-        return (data.map((i) => {
-            return (
-                <div>{JSON.stringify(i)}</div>
-            );
-        }))
-    }
-
-    renderItems = async () => {
-        console.log('renderitems')
+    getItems = async () => {
         let rec = new FirebaseRecipe()
         let dataFast = await rec.getFastRecipes()
-        console.log(dataFast)
         let dataFit = await rec.getFitDeserts()
         let dataHigh = await rec.getHighCalories()
         let dataLooking = await rec.getLookingNew()
         let dataLow = await rec.getLowCalories()
         let dataStudent = await rec.getStudentRecipe()
-        return (
-            <Container>
-                <div>Hızlı Tarifler</div>
-            </Container>
-        )
+        this.setState({ dataFit, dataStudent, dataLow, dataLooking, dataHigh, dataFast });
     }
 
     render() {
-        console.log('render')
         return (
             <Container>
-                {this.renderItems()}
+                <div>Fit Tatlılar</div>
+                <ul>
+                    {this.state.dataFit.map((i) => {
+                        return (
+                            <li>Tarifin İsmi: {i.data()!.Tarifinİsmi}{'\n'} Yazar: {i.data()!.YapanKişi} <FaTrash onClick={async () => {
+                                let rec = new FirebaseRecipe()
+                                let data = rec.getDetailsOfDocument(i);
+                                let answer = window.confirm("Delete data?")
+                                console.log(answer);
+                                if (answer)
+                                    await rec.deleteRecipe(data.DocumentReference);
+                                this.props.history.replace("/")
+                            }} /></li>
+                        );
+                    })}
+                </ul>
+                <div>Pratik Tarifler</div>
+                <ul>
+                    {this.state.dataFast.map((i) => {
+                        return (
+                            <li>Tarifin İsmi: {i.data()!.Tarifinİsmi}{'\n'} Yazar: {i.data()!.YapanKişi} <FaTrash onClick={async () => {
+                                let rec = new FirebaseRecipe()
+                                let data = rec.getDetailsOfDocument(i);
+                                let answer = window.confirm("Delete data?")
+                                console.log(answer);
+                                if (answer)
+                                    await rec.deleteRecipe(data.DocumentReference);
+                                this.props.history.replace("/")
+                            }} /></li>
+                        );
+                    })}
+                </ul>
+                <div>Yüksek Kalori</div>
+                <ul>
+                    {this.state.dataHigh.map((i) => {
+                        return (
+                            <li>Tarifin İsmi: {i.data()!.Tarifinİsmi}{'\n'} Yazar: {i.data()!.YapanKişi} <FaTrash onClick={async () => {
+                                let rec = new FirebaseRecipe()
+                                let data = rec.getDetailsOfDocument(i);
+                                let answer = window.confirm("Delete data?")
+                                console.log(answer);
+                                if (answer)
+                                    await rec.deleteRecipe(data.DocumentReference);
+                                this.props.history.replace("/")
+                            }} /></li>
+                        );
+                    })}
+                </ul>
+                <div>Düşük Kalori</div>
+                <ul>
+                    {this.state.dataLow.map((i) => {
+                        return (
+                            <li>Tarifin İsmi: {i.data()!.Tarifinİsmi}{'\n'} Yazar: {i.data()!.YapanKişi} <FaTrash onClick={async () => {
+                                let rec = new FirebaseRecipe()
+                                let data = rec.getDetailsOfDocument(i);
+                                let answer = window.confirm("Delete data?")
+                                console.log(answer);
+                                if (answer)
+                                    await rec.deleteRecipe(data.DocumentReference);
+                                this.props.history.replace("/")
+                            }} /></li>
+                        );
+                    })}
+                </ul>
+                <div>Değişklik Arayanlar</div>
+                <ul>
+                    {this.state.dataLooking.map((i) => {
+                        return (
+                            <li>Tarifin İsmi: {i.data()!.Tarifinİsmi}{'\n'} Yazar: {i.data()!.YapanKişi} <FaTrash onClick={async () => {
+                                let rec = new FirebaseRecipe()
+                                let data = rec.getDetailsOfDocument(i);
+                                let answer = window.confirm("Delete data?")
+                                console.log(answer);
+                                if (answer)
+                                    await rec.deleteRecipe(data.DocumentReference);
+                                this.props.history.replace("/")
+                            }} /></li>
+                        );
+                    })}
+                </ul>
+                <div>Öğrencilere Özel</div>
+                <ul>
+                    {this.state.dataStudent.map((i) => {
+                        return (
+                            <li>Tarifin İsmi: {i.data()!.Tarifinİsmi}{'\n'} Yazar: {i.data()!.YapanKişi} <FaTrash onClick={async () => {
+                                let rec = new FirebaseRecipe()
+                                let data = rec.getDetailsOfDocument(i);
+                                let answer = window.confirm("Delete data?")
+                                console.log(answer);
+                                if (answer)
+                                    await rec.deleteRecipe(data.DocumentReference);
+                                this.props.history.replace("/")
+                            }} /></li>
+                        );
+                    })}
+                </ul>
             </Container>
         );
     }
 }
+
 
 export default withRouter(DeleteRecipePage);

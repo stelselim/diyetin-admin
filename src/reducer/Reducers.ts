@@ -1,10 +1,14 @@
 import { createStore, combineReducers } from 'redux';
 import { User } from './Actions';
+import firebase from 'firebase';
+import { firebaseid } from '../appid';
 
 interface ActionUser {
     payload: User;
     type: string;
 }
+
+firebase.initializeApp(firebaseid);
 
 let firebaseuserfunc = () => {
     if (localStorage.getItem('firebaseuser') !== '' && localStorage.getItem('firebaseuser') !== null)

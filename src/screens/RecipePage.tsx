@@ -149,7 +149,7 @@ class RecipePage extends Component<Props, State> {
                                 render={({ field, form, meta }) => {
                                     return (
                                         <BFormGroup>
-                                            <BForm.Label>Example select</BForm.Label>
+                                            <BForm.Label>Tarif Tipi</BForm.Label>
                                             <BForm.Control as="select" {...field} placeholder="Başlık (Max 80 karakter)">
                                                 <option value="addFastRecipe">Pratik Tarif</option>
                                                 <option value="addFitDesert">Fit Tatlı</option>

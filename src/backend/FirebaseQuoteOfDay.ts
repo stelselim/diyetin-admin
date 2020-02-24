@@ -22,6 +22,8 @@ export class QuoteOfDay {
             .collection('/BeslenmeApp/AllDatas/GününSözü')
             .doc('doc')
             .get();
+        console.log(snapshot);
+        console.log(snapshot.exists);
         if (snapshot.exists) {
             let quoteData = snapshot.data() as QuoteData;
             quoteData.sözler.push(newQuote);

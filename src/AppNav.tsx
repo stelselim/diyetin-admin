@@ -11,6 +11,7 @@ import RecipePage from './screens/RecipePage';
 import FAQPage from './screens/FAQPage';
 import QODPage from './screens/QuotePage';
 import DeleteRecipePage from './screens/DeleteRecipePage';
+import DeleteBlogPage from './screens/DeleteBlogPage';
 
 interface Props {
     user: User;
@@ -29,6 +30,14 @@ export class AppNav extends Component<Props> {
                         render={() => {
                             if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
                             return <BlogPage />;
+                        }}
+                    />
+                    <Route
+                        path="/delblog"
+                        exact
+                        render={() => {
+                            if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
+                            return <DeleteBlogPage />;
                         }}
                     />
                     <Route
