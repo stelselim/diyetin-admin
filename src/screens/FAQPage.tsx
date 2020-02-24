@@ -20,10 +20,10 @@ const valSchema = Yup.object().shape({
         .required('Boş bırakılamaz'),
     resource: Yup.string()
         .min(2)
+        .max(300)
         .required('Boş bırakılamaz'),
     type: Yup.string()
         .min(1)
-        .max(100)
         .required('Boş bırakılamaz'),
 });
 

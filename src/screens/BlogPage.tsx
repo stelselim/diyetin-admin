@@ -73,7 +73,6 @@ class AddBlogPage extends Component<Props, State> {
     };
 
     render() {
-        console.log(toArrayBuffer);
         return (
             <Container>
                 <Formik

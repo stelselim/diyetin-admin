@@ -12,7 +12,7 @@ import { QuoteOfDay } from '../backend/FirebaseQuoteOfDay';
 const valSchema = Yup.object().shape({
     description: Yup.string()
         .min(2)
-        .max(1000)
+        .max(300)
         .required('Boş bırakılamaz'),
 });
 
