@@ -9,8 +9,8 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { FaTrash, FaThumbsDown } from 'react-icons/fa'
 import Row from 'react-bootstrap/Row';
 import { Formik, Field, Form } from 'formik';
-import { FirebaseRecipe, details } from '../backend/FirebaseRecipe';
-import { FirebaseBlogOperations } from '../backend/FirebaseBlog';
+import { FirebaseRecipe, details } from '../../backend/FirebaseRecipe';
+import { FirebaseBlogOperations } from '../../backend/FirebaseBlog';
 const toArrayBuffer = require('to-array-buffer');
 
 interface Props extends RouteComponentProps { }
@@ -19,7 +19,7 @@ interface State {
     data: Array<firebase.firestore.DocumentSnapshot>,
 }
 
-class DeleteRecipePage extends Component<Props, State> {
+class DeleteBlogPost extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -64,4 +64,4 @@ class DeleteRecipePage extends Component<Props, State> {
 }
 
 
-export default withRouter(DeleteRecipePage);
+export default withRouter(DeleteBlogPost);

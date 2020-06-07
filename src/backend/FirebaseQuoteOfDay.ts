@@ -30,7 +30,7 @@ export class QuoteOfDay {
             await this.firestoreInstance
                 .collection('/BeslenmeApp/AllDatas/GününSözü')
                 .doc('doc')
-                .set({ sözler: quoteData });
+                .set({ sözler: quoteData.sözler });
         } else {
             let arrayNew: Array<string> = [newQuote];
             await this.firestoreInstance

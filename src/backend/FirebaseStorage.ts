@@ -9,5 +9,12 @@ export class Firestorage {
         this.storage = firebase.storage();
     }
 
-    addPictureToStorage = () => {};
+    addPictureToStorage = () => { };
+}
+
+/**
+ * @param {string} URL 
+ */
+export async function deleteImage(url:string){
+    await firebase.storage().refFromURL(url).delete();
 }

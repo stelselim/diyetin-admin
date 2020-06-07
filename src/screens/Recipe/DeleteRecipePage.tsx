@@ -9,7 +9,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { FaTrash, FaThumbsDown } from 'react-icons/fa'
 import Row from 'react-bootstrap/Row';
 import { Formik, Field, Form } from 'formik';
-import { FirebaseRecipe, details } from '../backend/FirebaseRecipe';
+import { FirebaseRecipe, details } from '../../backend/FirebaseRecipe';
 const toArrayBuffer = require('to-array-buffer');
 
 interface Props extends RouteComponentProps { }

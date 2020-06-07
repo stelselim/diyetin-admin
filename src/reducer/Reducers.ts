@@ -1,7 +1,7 @@
 import { createStore, combineReducers } from 'redux';
 import { User } from './Actions';
 import firebase from 'firebase';
-import { firebaseid } from '../appid';
+import {firebaseid}  from '../appid';
 
 interface ActionUser {
     payload: User;

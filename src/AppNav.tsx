@@ -6,12 +6,14 @@ import { User } from './reducer/Actions';
 import HomePage from './screens/HomePage';
 import LoginPage from './screens/LoginPage';
 import NavBar from './components/NavBar/NavBar';
-import BlogPage from './screens/BlogPage';
-import RecipePage from './screens/RecipePage';
+import BlogPage from './screens/Blog/BlogPage';
+import RecipePage from './screens/Recipe/RecipePage';
 import FAQPage from './screens/FAQPage';
 import QODPage from './screens/QuotePage';
-import DeleteRecipePage from './screens/DeleteRecipePage';
-import DeleteBlogPage from './screens/DeleteBlogPage';
+import DeleteRecipePage from './screens/Recipe/DeleteRecipePage';
+import DeleteBlogPage from './screens/Blog/DeleteBlogPage';
+import EditBlogPage from './screens/Blog/EditBlogPage';
+import EditRecipePage from './screens/Recipe/EditRecipePage';
 
 interface Props {
     user: User;
@@ -40,6 +42,15 @@ export class AppNav extends Component<Props> {
                             return <DeleteBlogPage />;
                         }}
                     />
+                     <Route
+                        path="/editblog"
+                        exact
+                        render={() => {
+                            if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
+                            return <EditBlogPage />;
+                        }}
+                    />
+                     
                     <Route
                         path="/qod"
                         exact
@@ -62,6 +73,14 @@ export class AppNav extends Component<Props> {
                         render={() => {
                             if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
                             return <DeleteRecipePage />;
+                        }}
+                    />
+                    <Route
+                        path="/editrecipe"
+                        exact
+                        render={() => {
+                            if (this.props.user.username === '') return <Redirect to={{ pathname: '/login' }} />;
+                            return <EditRecipePage />;
                         }}
                     />
                     <Route

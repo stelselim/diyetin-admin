@@ -9,7 +9,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import { Formik, Field, Form } from 'formik';
-import { FirebaseBlogOperations } from '../backend/FirebaseBlog';
+import { FirebaseBlogOperations } from '../../backend/FirebaseBlog';
 const toArrayBuffer = require('to-array-buffer');
 
 const valSchema = Yup.object().shape({
@@ -32,7 +32,7 @@ const valSchema = Yup.object().shape({
     image: Yup.mixed().required('Boş bırakılamaz'),
 });
 
-interface Props extends RouteComponentProps {}
+interface Props extends RouteComponentProps { }
 
 interface State {
     user: {
@@ -63,9 +63,9 @@ class AddBlogPage extends Component<Props, State> {
     }
 
     getBase64 = (file: File): Promise<string> => {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             var reader = new FileReader();
-            reader.onload = function() {
+            reader.onload = function () {
                 resolve(reader.result as string);
             };
             reader.onerror = reject;
@@ -76,9 +76,18 @@ class AddBlogPage extends Component<Props, State> {
     render() {
         return (
             <Container>
-                <Link style={{ color: 'blue' }} to="delblog">
-                    Blogu Sil
+                <div style={{flexDirection:"column",padding:30}}>
+                    <Link style={{ color: 'red' }} to="delblog">
+                        Blogu Sil
                 </Link>
+                <div style={{height:30}}> </div>
+
+                    <Link style={{ color: 'blue' }} to="editblog">
+                        Blog Düzenleme
+                </Link>
+                
+                </div>
+
                 <Formik
                     initialValues={this.state.user}
                     onSubmit={async (values, actions) => {
@@ -226,16 +235,16 @@ class AddBlogPage extends Component<Props, State> {
                             {this.state.user.imagepreview === '' ? (
                                 <div />
                             ) : (
-                                <Container style={{ textAlign: 'center' }}>
-                                    <Image
-                                        style={{
-                                            width: '15rem',
-                                            height: '15rem',
-                                        }}
-                                        src={this.state.user.imagepreview}
-                                    />
-                                </Container>
-                            )}
+                                    <Container style={{ textAlign: 'center' }}>
+                                        <Image
+                                            style={{
+                                                width: '15rem',
+                                                height: '15rem',
+                                            }}
+                                            src={this.state.user.imagepreview}
+                                        />
+                                    </Container>
+                                )}
                             <Row style={{ justifyContent: 'center' }}>
                                 <Button type="submit">Gönder</Button>
                             </Row>

@@ -8,6 +8,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import { Formik, Field, Form } from 'formik';
 import { QuoteOfDay } from '../backend/FirebaseQuoteOfDay';
+import firebase from 'firebase';
 
 const valSchema = Yup.object().shape({
     description: Yup.string()
@@ -16,9 +17,10 @@ const valSchema = Yup.object().shape({
         .required('Boş bırakılamaz'),
 });
 
-interface Props extends RouteComponentProps {}
+interface Props extends RouteComponentProps { }
 
 interface State {
+    quotes: Array<string>,
     user: {
         description: string;
     };
@@ -28,11 +30,24 @@ class QuoteOfDayPage extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            quotes: [],
             user: {
                 description: '',
             },
         };
     }
+    async getQuotes() {
+        let snap = await firebase.firestore().doc("/BeslenmeApp/AllDatas/GününSözü/doc").get();
+        //@ts-ignore
+        let quotes = snap.data().sözler;
+        this.setState({ quotes:quotes });
+        
+    }
+
+    componentDidMount() {
+        this.getQuotes();
+    }
+
 
     render() {
         return (
@@ -80,6 +95,19 @@ class QuoteOfDayPage extends Component<Props, State> {
                         </Form>
                     )}
                 />
+                <div style={{ height: 30 }} />
+                <ul>
+                    {this.state.quotes.map((i) => {
+                        console.log(i);
+                        let qu = i;
+                        return (
+                            <li>
+                                {qu}
+                            </li>
+                        );
+                    })}
+                </ul>
+                <div style={{ height: 30 }} />
             </Container>
         );
     }

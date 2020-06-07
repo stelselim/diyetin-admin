@@ -9,7 +9,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import { Formik, Field, Form } from 'formik';
-import { FirebaseRecipe } from '../backend/FirebaseRecipe';
+import { FirebaseRecipe } from '../../backend/FirebaseRecipe';
 const toArrayBuffer = require('to-array-buffer');
 
 const valSchema = Yup.object().shape({
@@ -102,9 +102,18 @@ class RecipePage extends Component<Props, State> {
     render() {
         return (
             <Container>
-                <Link style={{ color: 'blue' }} to="delrecipe">
-                    Tarifi Sil
+                <div style={{ flexDirection: "column", padding: 30 }}>
+                    <Link style={{ color: 'red' }} to="delrecipe">
+                        Tarifi Sil
                 </Link>
+                    {/* <div style={{ height: 30 }}> </div>
+
+                    <Link style={{ color: 'blue' }} to="/editrecipe">
+                        Tarifi Düzenle
+                </Link> */}
+
+                </div>
+
                 <Formik
                     initialValues={this.state.user}
                     onSubmit={async (values, actions) => {
